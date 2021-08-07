@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Table from '../components/Table';
 import Person from '../objects/Person';
 import '../styles/Home.css';
+import { Link } from "react-router-dom";
 
 function Home() {
     const [search, setSearch] = useState("");
@@ -22,16 +23,10 @@ function Home() {
         return findElem.length === 0 || findElem === null || findElem === undefined ? persons : findElem;
     };
 
-    // const addUser = (e) => {
-    //     return Emitter.on('INPUT_FROM_MAIN', () => {
-    //         return '/adduser';
-    //     });
-    // };
-
     return (
         <div className="home">
             <input type="text" name="name" className="input-filter" value={search} onChange={(e) => setSearch(e.target.value)}/>
-            {/* <input type="button" name="add" className="input-add-user" value="Add user" onClick={(e) => addUser(e)}/> */}
+            <Link to="/adduser" className="adduser-btn">Register</Link>
             <Table data={filterOpt()}/>
         </div>
     );
