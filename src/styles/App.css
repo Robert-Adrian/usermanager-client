@@ -1,0 +1,17 @@
+.App {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.adduser-btn {
+  position: absolute !important;
+  top: 20% !important;
+  left: 50% !important;
+  transform: translate(-50%, -20%) !important;
+  background-color:coral !important;
+  padding: 10px !important;
+  border: 2px solid black !important;
+  text-decoration: none !important;
+  color: white !important;
+  font-weight: bold !important;
+}

@@ -1,0 +1,31 @@
+.home {
+    width: 100% !important;
+    height: 100vh !important;
+    background-color:blanchedalmond !important;
+}
+
+.input-filter {
+    width: 20% !important;
+    position: relative !important;
+    top: 30% !important;
+    left: 50% !important;
+    transform: translate(-50%, -30%) !important;
+    padding: 5px !important;
+    border: 2px solid black !important;
+    border-radius: 20px !important;
+}
+
+.input-filter:focus {
+    outline: none !important;
+}
+
+.input-add-user {
+    position: relative !important;
+    top: 40% !important;
+    left: 25% !important;
+    transform: translate(-25%, -40%) !important;
+    padding: 10px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    box-shadow: 0px 0px 6px rgb(0, 0, 0, 25%) !important;
+}
