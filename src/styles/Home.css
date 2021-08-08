@@ -4,12 +4,21 @@
     background-color:blanchedalmond !important;
 }
 
+.container {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-evenly !important;
+    align-items: center !important;
+}
+
 .input-filter {
     width: 20% !important;
-    position: relative !important;
-    top: 30% !important;
-    left: 50% !important;
-    transform: translate(-50%, -30%) !important;
     padding: 5px !important;
     border: 2px solid black !important;
     border-radius: 20px !important;
@@ -20,10 +29,6 @@
 }
 
 .input-add-user {
-    position: relative !important;
-    top: 40% !important;
-    left: 25% !important;
-    transform: translate(-25%, -40%) !important;
     padding: 10px !important;
     font-size: 15px !important;
     font-weight: bold !important;

@@ -1,33 +1,112 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from '../components/Table';
 import Person from '../objects/Person';
 import '../styles/Home.css';
 import { Link } from "react-router-dom";
+import { deleteUser, getUsers, modifyUser } from '../services/users.service';
+import { modifyClicks } from '../services/nonclicks.service';
 
 function Home() {
     const [search, setSearch] = useState("");
-    const persons = [
-        new Person(1, 'Robert', 0),
-        new Person(2, 'Ale', 0)
-    ];
+    const [persons, setPersons] = useState([]);
+    const [toastMessage, setToastMessage] = useState("");
+
+    useEffect(() => {
+        getUsers().then(response => {
+            let list = [];
+            if (response.code === 200) {
+                if (response.data !== "") {
+                    Toast("Users have been successfully uploaded !");
+                    response.data.forEach(item => {
+                        list.push(new Person(item.id, item.name, item.nonClicks));
+                    });
+                }
+            } else {
+                Toast("Users were not successfully uploaded !");
+            }
+            setPersons(list);
+        }).catch(error => {
+
+        });
+    }, []);
 
     const filterOpt = () => {
-        if (search === "")
+        if (persons !== undefined && persons !== null) {
+            if (search === "")
             return persons;
 
-        let findElem = persons.filter(elem => {
-            if (elem.name.toLowerCase().includes(search)) {
-                return elem;
+            let findElem = persons.filter(elem => {
+                return elem.name.toLowerCase().includes(search);
+            });
+            return findElem;
+        } else {
+            return [];
+        }
+    };
+
+    const deleteRow = (index) => {
+       let list = persons.slice();
+       deleteUser(list[index].id).then(response => {
+           if (response.code === 200) {
+               Toast("User successfully deleted !");
+                list.splice(index, 1);
+                setPersons(list); 
+           } else {
+               Toast("The user could not be deleted !");
+           }
+       }).catch(error => {
+
+       });
+    }
+
+    const modifyRow = (newElem, index) => {
+        let list = persons.slice();
+        newElem.id = parseInt(newElem.id);
+        modifyUser(newElem).then(response => {
+            if (response.code === 200) {
+                list.splice(index, 1, newElem);
+                Toast("The changes have been made !");
+                setPersons(list);
+            } else {
+                Toast("The changes have not been made !");
+            }
+        }).catch(error => {
+
+        });
+    };
+
+    const NonClicks = (index) => {
+        let list = persons.slice();
+        list.forEach((item, indexElem) => {
+            if (indexElem !== index) {
+                item['nonClicks'] += 1;
+                modifyClicks(item).then(response => {
+            
+                }).catch(error => {
+
+                });
+            } else {
+                Toast("Non clicks performed !");
             }
         });
-        return findElem.length === 0 || findElem === null || findElem === undefined ? persons : findElem;
+        setPersons(list);
+    }
+
+    const Toast = (message) => {
+        setToastMessage(message);
+        setInterval(() => {
+            setToastMessage("");
+        }, 3000);
     };
 
     return (
         <div className="home">
-            <input type="text" name="name" className="input-filter" value={search} onChange={(e) => setSearch(e.target.value)}/>
-            <Link to="/adduser" className="adduser-btn">Register</Link>
-            <Table data={filterOpt()}/>
+            <div className="container">
+                <input type="text" name="name" className="input-filter" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                <Link to="/adduser" className="adduser-btn">Register</Link>
+                {toastMessage !== '' ? <p>{toastMessage}</p> : ""}
+                <Table data={filterOpt()} funcDel={deleteRow} funcMod={modifyRow} funcNon={NonClicks}/>
+            </div>
         </div>
     );
 }

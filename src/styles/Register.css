@@ -45,3 +45,7 @@
 .form span input:nth-child(2) {
     outline: none !important;
 }
+
+.p-error {
+    color: red !important;
+}

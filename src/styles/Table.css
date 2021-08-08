@@ -1,8 +1,4 @@
 .table-data {
-    position: relative !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
     border: 1px solid black !important;
     text-align: center !important;
     background-color: white !important;
@@ -13,4 +9,8 @@
 .table-data > thead > tr > th {
     border: 1px solid black !important;
     padding: 10px !important;
+}
+
+.table-data > tbody > tr > td {
+    cursor: pointer !important;
 }
