@@ -11,6 +11,7 @@ function Register() {
             setStateSmall("empty");
         } else {
             addUser({"name": formName}).then(response => {
+                console.log(response);
                 if (response.code === 1062) {
                     setStateSmall("error");
                 } else if (response.code === 200) {

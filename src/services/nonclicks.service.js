@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const modifyClicks = async (data) => {
-    return await axios.put('/modifyclicks', data,{
+    return await axios.put('/api/modifyclicks', data,{
         headers: {
            'Content-Type' : "application/json"
         }

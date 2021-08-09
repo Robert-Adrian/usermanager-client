@@ -36,7 +36,7 @@ function Home() {
             return persons;
 
             let findElem = persons.filter(elem => {
-                return elem.name.toLowerCase().includes(search);
+                return elem.name.toLowerCase().includes(search.toLowerCase());
             });
             return findElem;
         } else {
@@ -64,11 +64,17 @@ function Home() {
         newElem.id = parseInt(newElem.id);
         modifyUser(newElem).then(response => {
             if (response.code === 200) {
-                list.splice(index, 1, newElem);
+                list.splice(index, 1, new Person(newElem.id, newElem.name, newElem.nonClicks));
                 Toast("The changes have been made !");
                 setPersons(list);
+               
             } else {
                 Toast("The changes have not been made !");
+                let id = setInterval(reload, 2000);
+                function reload() {
+                    window.location.reload();
+                    clearInterval(id);
+                }
             }
         }).catch(error => {
 
@@ -81,7 +87,7 @@ function Home() {
             if (indexElem !== index) {
                 item['nonClicks'] += 1;
                 modifyClicks(item).then(response => {
-            
+                    
                 }).catch(error => {
 
                 });
@@ -94,9 +100,6 @@ function Home() {
 
     const Toast = (message) => {
         setToastMessage(message);
-        setInterval(() => {
-            setToastMessage("");
-        }, 3000);
     };
 
     return (
